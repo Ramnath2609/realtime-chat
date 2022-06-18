@@ -1,4 +1,5 @@
 import express from "express";
+import path from 'path';
 import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -27,10 +28,15 @@ const io = new Server(server, {
     }
 });
 
+app.use(express.static("client/public"));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/public/index.html"));
+});
+
 io.on(ISocketEvent.connection, (socket: any) => {
     socket.on(ISocketEvent.joinRoom, ({ username, room }: { username: string, room: string }) => {
         const user = userJoin(socket.id, username, room);
-        console.log(socket.id, username, room);
 
         socket.join(user.room);
 
