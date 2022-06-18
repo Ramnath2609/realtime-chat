@@ -10,7 +10,15 @@ body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
 	background: #e6e9ff;
-	margin: 20px;
+	height: 100vh;
+}
+
+.App {
+	height: 100vh;
+	background: #e6e9ff;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
 }
 
 ul {

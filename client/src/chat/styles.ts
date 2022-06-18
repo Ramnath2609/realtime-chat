@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const ChatContainer = styled.div`
     max-width: 1100px;
-    background: #fff;
+    background: #e6e9ff;
     margin: 30px auto;
     overflow: hidden;
-`;
+`
 
 export const ChatHeader = styled.header`
     background: #667aff;
@@ -16,9 +16,9 @@ export const ChatHeader = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-`;
+`
 
-export const SideBar = styled.div`
+export const ChatSideBar = styled.div`
     background: #7386ff;
     color: #fff;
     padding: 20px 20px 60px;
@@ -35,18 +35,18 @@ export const SideBar = styled.div`
     ul li {
         padding: 10px 0;
     }
-`;
+`
 
 export const ChatMain = styled.main`
     display: grid;
     grid-template-columns: 1fr 3fr;
-`;
+`
 
 export const ChatMessages = styled.div`
     padding: 30px;
     max-height: 500px;
     overflow-y: scroll;
-`;
+`
 
 export const Message = styled.div`
     padding: 10px;
@@ -54,7 +54,7 @@ export const Message = styled.div`
     background-color: #e6e9ff;
     border-radius: 5px;
     overflow-wrap: break-word;
-`;
+`
 
 export const Meta = styled.div`
     font-size: 15px;
@@ -65,11 +65,11 @@ export const Meta = styled.div`
     span {
         color: #777;
     }
-`;
+`
 
 export const FormContainer = styled.div`
     padding: 20px 30px;
-	background-color: #667aff;;
+    background-color: #667aff;
     form {
         display: flex;
     }
@@ -79,5 +79,4 @@ export const FormContainer = styled.div`
         height: 40px;
         flex: 1;
     }
-`;
-
+`

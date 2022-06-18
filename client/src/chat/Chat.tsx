@@ -1,45 +1,87 @@
-import {
-    ChatContainer, ChatHeader, ChatMain,
-    SideBar, ChatMessages, Message, Meta, FormContainer
-} from './styles'
+import * as React from 'react'
+import { io, Socket } from 'socket.io-client'
+import { ChatContainer, ChatHeader, ChatMain, FormContainer } from './styles'
 import { Button } from '../home/styles'
+import { Messages } from './Messages'
+import { SideBar } from './SideBar'
+import { IMessage } from '../types'
+import { useNavigate } from 'react-router-dom'
 
-export function Chat() {
-    return (
-        <ChatContainer>
-            <ChatHeader>
-                <h1><i className="fas fa-smile"></i> ChatCord</h1>
-                <a id="leave-btn" className="btn">Leave Room</a>
-            </ChatHeader>
-            <ChatMain>
-                <SideBar>
-                    <h3><i className="fas fa-comments"></i> Room Name:</h3>
-                    <h2 id="room-name"></h2>
-                    <h3><i className="fas fa-users"></i> Users</h3>
-                    <ul id="users"></ul>
-                </SideBar>
-                <ChatMessages>
-                    <Message>
-                        <Meta>Brad <span>9:12pm</span></Meta>
-                        <p className="text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            repudiandae.
-                        </p>
-                    </Message>
-                </ChatMessages>
-            </ChatMain>
-            <FormContainer>
-                <form id="chat-form">
-                    <input
-                        id="msg"
-                        type="text"
-                        placeholder="Enter Message"
-                        required
-                        autoComplete="off"
-                    />
-                    <Button><i className="fas fa-paper-plane"></i> Send</Button>
-                </form>
-            </FormContainer>
-        </ChatContainer>
-    )
+interface IChatProps {
+  userName: string;
+  roomName: string;
+}
+
+export function Chat(props: IChatProps) {
+  const { userName, roomName } = props
+  const navigate = useNavigate()
+  const [socket, setSocket] = React.useState({} as Socket<any>)
+  const [messages, setMessages] = React.useState<IMessage[]>([])
+  const [roomAndUsers, setRoomAndUsers] = React.useState({ room: '', users: [] })
+  const [text, setText] = React.useState<string>('')
+
+  React.useEffect(() => {
+    const newSocket = io('http://localhost:3005', { transports: ['websockets', 'polling', 'flashsocket'] })
+    setSocket(newSocket)
+    // return () => newSocket.close()
+  }, [])
+
+  React.useEffect(() => {
+    if (socket.emit) {
+      socket.emit('joinRoom', { username: userName, room: roomName })
+      const messageListener = (message: IMessage) => {
+        setMessages((prevMessages) => {
+          const newMessages = [...prevMessages]
+          newMessages.push(message)
+          return newMessages
+        })
+      }
+      socket.on('message', messageListener)
+      socket.on('roomUsers', setRoomAndUsers)
+      socket.emit('getMessages')
+    }
+  }, [roomName, socket, userName])
+
+  const onType = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const message = e.target.value
+    setText(message)
+  }, [])
+
+  const onSend = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    socket.emit('chatMessage', text)
+    setText('')
+  }, [socket, text])
+
+  const onLeaveRoom = React.useCallback(() => {
+    socket.close()
+    navigate('/')
+  }, [navigate, socket])
+
+  return (
+    <ChatContainer>
+      <ChatHeader>
+        <h1><i className="fas fa-smile"></i> ChatCord</h1>
+        <Button onClick={onLeaveRoom}>Leave Room</Button>
+      </ChatHeader>
+      <ChatMain>
+        <SideBar roomAndUsers={roomAndUsers} />
+        <Messages messages={messages} />
+      </ChatMain>
+      <FormContainer>
+        <form id="chat-form" onSubmit={onSend}>
+          <input
+            id="msg"
+            type="text"
+            value={text}
+            placeholder="Enter Message"
+            required
+            autoComplete="off"
+            onChange={onType}
+          />
+          <Button type="submit"><i className="fas fa-paper-plane"></i> Send</Button>
+        </form>
+      </FormContainer>
+    </ChatContainer>
+  )
 }
