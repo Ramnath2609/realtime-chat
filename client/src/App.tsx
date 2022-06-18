@@ -20,7 +20,7 @@ function App() {
 
   const onSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    navigate('/chat')
+    navigate(`${window.location.pathname}/chat`)
   }, [navigate])
 
   return (
