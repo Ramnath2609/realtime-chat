@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc && cd client && yarn build && cd .. && yarn start",
+    "build": "npx tsc && cd client && yarn install && yarn build && cd .. && yarn start",
     "start": "node dist/server.js",
     "dev-server": "nodemon server",
     "dev": "concurrently \"nodemon dist/server.js\" \"cd client && yarn dev\""
