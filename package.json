@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc && cd client && yarn install && yarn build && cd .. && yarn start",
+    "build": "npx tsc && yarn start",
     "start": "node dist/server.js",
     "dev-server": "nodemon server",
-    "dev": "concurrently \"nodemon dist/server.js\" \"cd client && yarn dev\""
+    "dev": "concurrently \"nodemon dist/server.js\" \"cd client && yarn dev\"",
+    "heroku-prebuild": "cd client && yarn install && yarn build"
   },
   "keywords": [],
   "author": "",
