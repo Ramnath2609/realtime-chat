@@ -11,7 +11,7 @@ import {
     getRoomUsers
 } from './utils/users';
 import { formatMessage } from './utils/messages'
-const PORT = 3005 || process.env.PORT;
+const PORT = process.env.PORT || 3005;
 
 const botName = 'ChatBot';
 
