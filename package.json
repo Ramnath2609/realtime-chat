@@ -9,7 +9,7 @@
     "dev-server": "nodemon server",
     "dev": "concurrently \"nodemon dist/server.js\" \"cd client && yarn dev\"",
     "heroku-prebuild": "yarn install",
-    "heroku-postbuild": "cd client && yarn install && yarn build"
+    "heroku-postbuild": "npx tsc && cd client && yarn install && yarn build"
   },
   "keywords": [],
   "author": "",
