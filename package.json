@@ -2,13 +2,14 @@
   "name": "realtime-chat",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "build": "npx tsc && yarn start",
     "start": "node dist/server.js",
     "dev-server": "nodemon server",
     "dev": "concurrently \"nodemon dist/server.js\" \"cd client && yarn dev\"",
-    "heroku-prebuild": "cd client && yarn install && yarn build"
+    "heroku-prebuild": "yarn install",
+    "heroku-postbuild": "cd client && yarn install && yarn build"
   },
   "keywords": [],
   "author": "",
