@@ -60,7 +60,7 @@ export function Chat(props: IChatProps) {
   return (
     <ChatContainer>
       <ChatHeader>
-        <h1><i className="fas fa-smile"></i> ChatCord</h1>
+        <h1><i className="fas fa-solid fa-comments"></i> ChatCord</h1>
         <Button onClick={onLeaveRoom}>Leave Room</Button>
       </ChatHeader>
       <ChatMain>

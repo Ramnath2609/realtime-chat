@@ -14,7 +14,7 @@ export function Home(props: IHomeProps) {
   return (
     <JoinContainer>
       <JoinHeader>
-        <h1><i className="fas fa-smile"></i> ChatCord</h1>
+        <h1><i className="fas fa-solid fa-comments"></i> ChatCord</h1>
       </JoinHeader>
       <JoinMain>
         <Form onSubmit={onSubmit}>
