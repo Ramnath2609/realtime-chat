@@ -20,7 +20,7 @@ function App() {
 
   const onSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    navigate(`${window.location.pathname}/chat`)
+    navigate('https://realtime-chat-ram.herokuapp.com/chat')
   }, [navigate])
 
   return (
