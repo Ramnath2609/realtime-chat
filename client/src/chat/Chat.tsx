@@ -21,6 +21,7 @@ export function Chat(props: IChatProps) {
   const [text, setText] = React.useState<string>('')
 
   React.useEffect(() => {
+    // During development modify the URL accordingly.
     const newSocket = io('/', { transports: ['websockets', 'polling', 'flashsocket'] })
     setSocket(newSocket)
   }, [])
